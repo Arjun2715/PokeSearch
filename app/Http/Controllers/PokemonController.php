@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Models\SearchHistory;
 
@@ -76,15 +76,31 @@ class PokemonController extends Controller
      * @param  string  $searchTerm
      * @return mixed
      */
-    private function callPokemonAPI($searchTerm)
+    public function pokemonProxy(Request $request)
     {
-        // Implement logic to call the Pokemon API and fetch data
-        // For example, you can use Guzzle HTTP client or any other HTTP client library
+        // Validate the search term
+        $request->validate([
+            'search_term' => 'required|string',
+        ]);
 
-        // For demonstration purposes, let's return a sample response
-        return [
-            'pokemon_name' => $searchTerm,
-            'abilities' => ['Ability 1', 'Ability 2', 'Ability 3'],
-        ];
+        // $pokemonApiUrl = "https://pokeapi.co/api/v2/pokemon/language/7/{$request->search_term}";
+        $pokemonApiUrl = "https://pokeapi.co/api/v2/ability/{$request->search_term}";
+
+        // Make a request to the Pokémon API using Guzzle HTTP client
+        $response = Http::get($pokemonApiUrl);
+
+        // Check if the request was successful
+        if ($response->successful()) {
+            // Save the search history
+            SearchHistory::create([
+                'search_term' => $request->search_term,
+                'user_session_id' => $request->session()->getId(),
+            ]);
+
+            return $response->json();
+        } else {
+            // Return an error response if the request fails
+            return response()->json(['error' => 'Failed to fetch data from Pokémon API'], $response->status());
+        }
     }
 }
