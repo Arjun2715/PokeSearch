@@ -89,11 +89,11 @@
             pokemonInfo.innerHTML = '<h2>' + data.name + '</h2>';
             pokemonInfo.innerHTML += '<img src="' + data.sprites.front_default + '" alt="' + data.name + '">';
             pokemonInfo.innerHTML += '<h3>Abilities:</h3>';
-            pokemonInfo.innerHTML += '<ul>';
-            data.abilities.forEach(function(ability) {
-                pokemonInfo.innerHTML += '<li>' + ability.ability.name + '</li>';
-            });
-            pokemonInfo.innerHTML += '</ul>';
+            // pokemonInfo.innerHTML += '<ul>';
+            // data.abilities.forEach(function(ability) {
+            //     pokemonInfo.innerHTML += '<li>' + ability.ability.name + '</li>';
+            // });
+            // pokemonInfo.innerHTML += '</ul>';
 
             // After getting the Pokémon data
             var pokemonId = data.id;
@@ -113,7 +113,7 @@
                 var spanishAbilities = uniqueSpanishEntries.map(entry => entry.flavor_text);
 
                 // Now append the Spanish abilities to the HTML
-                pokemonInfo.innerHTML += '<h3>Spanish Abilities:</h3>';
+                pokemonInfo.innerHTML += '<h3>Habilidades:</h3>';
                 pokemonInfo.innerHTML += '<ul>';
                 spanishAbilities.forEach(function(spanishAbility) {
                     pokemonInfo.innerHTML += '<li>' + spanishAbility + '</li>';
