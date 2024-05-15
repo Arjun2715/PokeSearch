@@ -107,9 +107,10 @@
             .then(abilityData => {
                 // Filter the flavor text entries to include only Spanish
                 var spanishEntries = abilityData.flavor_text_entries.filter(entry => entry.language.name === 'es');
+                var uniqueSpanishEntries = removeDuplicates(spanishEntries, 'flavor_text');
 
                 // Extract the abilities in Spanish from the filtered entries
-                var spanishAbilities = spanishEntries.map(entry => entry.flavor_text);
+                var spanishAbilities = uniqueSpanishEntries.map(entry => entry.flavor_text);
 
                 // Now append the Spanish abilities to the HTML
                 pokemonInfo.innerHTML += '<h3>Spanish Abilities:</h3>';
@@ -135,7 +136,12 @@
     });
 });
 
-
+// Function to remove duplicate entries based on a specific property
+function removeDuplicates(array, key) {
+    return array.filter((obj, index, self) =>
+        index === self.findIndex(entry => entry[key] === obj[key])
+    );
+}
 
     // Function to fetch and display search history
     function fetchSearchHistory() {
