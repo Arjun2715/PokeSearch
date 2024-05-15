@@ -17,4 +17,5 @@ Route::get('/search-history', [PokemonController::class, 'fetchSearchHistory'])-
 // Route to clear search history
 Route::post('/clear-search-history', [PokemonController::class, 'clearSearchHistory'])->name('search.history.clear');
 
-Route::get('/pokemon-proxy', [PokemonController::class, 'pokemonProxy'])->name('pokemon.proxy');
+// Route to delete individual search history item
+Route::delete('/delete-search-history/{id}', [PokemonController::class, 'deleteSearchHistoryItem'])->name('search.history.delete');

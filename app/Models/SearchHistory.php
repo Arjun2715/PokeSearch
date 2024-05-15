@@ -11,5 +11,5 @@ class SearchHistory extends Model
 
     protected $fillable = ['search_term', 'user_session_id']; // Define fillable columns
 
-    // Optional: Define relationships, accessors, mutators, or any other custom logic related to SearchHistory model.
+    protected $primaryKey = 'id'; // Define the primary key column name
 }

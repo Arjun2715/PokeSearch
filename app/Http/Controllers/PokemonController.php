@@ -70,37 +70,40 @@ class PokemonController extends Controller
     }
 
     /**
+     * Delete individual search history item.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteSearchHistoryItem($id)
+    {
+        // Find and delete the search history item by its ID
+        SearchHistory::find($id)->delete();
+
+        // Return a success message
+        return response()->json(['message' => 'Search history item deleted successfully']);
+    }
+
+    /**
      * Call the Pokemon API to fetch data.
      * For simplicity, you can implement this method or use a separate proxy class.
      *
      * @param  string  $searchTerm
      * @return mixed
      */
-    public function pokemonProxy(Request $request)
+    public function callPokemonAPI($searchTerm)
     {
-        // Validate the search term
-        $request->validate([
-            'search_term' => 'required|string',
-        ]);
-
-        // $pokemonApiUrl = "https://pokeapi.co/api/v2/pokemon/language/7/{$request->search_term}";
-        $pokemonApiUrl = "https://pokeapi.co/api/v2/ability/{$request->search_term}";
+        $pokemonApiUrl = "https://pokeapi.co/api/v2/pokemon/{$searchTerm}";
 
         // Make a request to the Pokémon API using Guzzle HTTP client
         $response = Http::get($pokemonApiUrl);
 
         // Check if the request was successful
         if ($response->successful()) {
-            // Save the search history
-            SearchHistory::create([
-                'search_term' => $request->search_term,
-                'user_session_id' => $request->session()->getId(),
-            ]);
-
             return $response->json();
         } else {
-            // Return an error response if the request fails
-            return response()->json(['error' => 'Failed to fetch data from Pokémon API'], $response->status());
+            // Return null if the request fails
+            return null;
         }
     }
 }
