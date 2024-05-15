@@ -1,4 +1,5 @@
 
+[![wakatime](https://wakatime.com/badge/user/018b84fc-1805-4419-a27d-a5484b979e0e/project/ea11e7b0-f324-4d43-bc7d-a4af3fa50784.svg)](https://wakatime.com/badge/user/018b84fc-1805-4419-a27d-a5484b979e0e/project/ea11e7b0-f324-4d43-bc7d-a4af3fa50784)
 
 # Aplicación Web de Búsqueda de Pokémon
 
