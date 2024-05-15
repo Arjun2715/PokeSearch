@@ -104,4 +104,6 @@ Los resultados y el historial deben mostrarse en una interfaz sencilla, sin nece
 - Cliente HTTP Guzzle
 - Tailwind CSS
 
+## Capturas
 
+![alt text](image.png)
