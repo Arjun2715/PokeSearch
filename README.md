@@ -29,7 +29,6 @@ Los resultados y el historial deben mostrarse en una interfaz sencilla, sin nece
 - Buscar Pokémon por nombre.
 - Ver información de Pokémon, incluyendo nombre, habilidades e imágenes.
 - Mostrar historial de búsquedas.
-- Buscar Pokémon y ver información en español.
 
 ## Uso
 
@@ -38,7 +37,7 @@ Los resultados y el historial deben mostrarse en una interfaz sencilla, sin nece
    Clona el repositorio en tu máquina local:
 
    ```bash
-   git clone https://github.com/your-username/PokeSearch.git
+   git clone https://github.com/arjun2715/PokeSearch.git
    ```
 
    Navega hasta el directorio del proyecto:
