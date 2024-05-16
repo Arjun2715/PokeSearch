@@ -18,7 +18,7 @@ Desarrollar una webapp simple que permita a los usuarios buscar Pokémon y mostr
 
 ## Requisitos y Funcionalidades
 La aplicación debe permitir al usuario ingresar un término de búsqueda.
-Debe mostrar el resultado obtenido de la API de Pokémon, incluyendo el nombre del Pokémon y sus habilidades en español.
+Debe mostrar el resultado obtenido de la API de Pokémon, incluyendo el nombre del Pokémon y sus habilidades.
 Se debe guardar un historial de búsqueda en la base de datos.
 El historial debe actualizarse dinámicamente sin necesidad de refrescar la página.
 Cada usuario debe tener su propio historial de búsqueda, distinto entre sesiones y navegadores.
