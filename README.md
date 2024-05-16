@@ -38,13 +38,13 @@ Los resultados y el historial deben mostrarse en una interfaz sencilla, sin nece
    Clona el repositorio en tu máquina local:
 
    ```bash
-   git clone https://github.com/your-username/pokemon-search-web-app.git
+   git clone https://github.com/your-username/PokeSearch.git
    ```
 
    Navega hasta el directorio del proyecto:
 
    ```bash
-   cd pokemon-search-web-app
+   cd PokeSearch
    ```
 
 2. **Configuración**
