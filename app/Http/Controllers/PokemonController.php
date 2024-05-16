@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Models\SearchHistory;
@@ -8,23 +9,23 @@ use App\Models\SearchHistory;
 class PokemonController extends Controller
 {
     /**
-     * Handle search requests.
+     * Manejar solicitudes de búsqueda.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function search(Request $request)
     {
-        // Validate the search term
+        // Validar el término de búsqueda
         $request->validate([
             'search_term' => 'required|string',
         ]);
 
-        // Call the proxy to fetch data from the Pokemon API
-        // For simplicity, let's assume we have a separate method or a proxy class for making API requests
+        // Llamar al proxy para obtener datos de la API de Pokémon
+        // Para simplicidad, supongamos que tenemos un método separado o una clase proxy para hacer solicitudes a la API
         $pokemonData = $this->callPokemonAPI($request->search_term);
 
-        // Save the search history if the API call was successful
+        // Guardar el historial de búsqueda si la llamada a la API fue exitosa
         if ($pokemonData) {
             SearchHistory::create([
                 'search_term' => $request->search_term,
@@ -32,61 +33,61 @@ class PokemonController extends Controller
             ]);
         }
 
-        // Return the response
+        // Devolver la respuesta
         return response()->json($pokemonData);
     }
 
     /**
-     * Fetch search history.
+     * Obtener historial de búsqueda.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function fetchSearchHistory(Request $request)
     {
-        // Fetch the user's last 10 search history records based on session ID
+        // Obtener los últimos 10 registros del historial de búsqueda del usuario basados en el ID de sesión
         $searchHistory = SearchHistory::where('user_session_id', $request->session()->getId())
             ->orderBy('created_at', 'desc')
             ->take(10)
             ->get();
 
-        // Return the search history
+        // Devolver el historial de búsqueda
         return response()->json($searchHistory);
     }
 
     /**
-     * Clear search history.
+     * Borrar historial de búsqueda.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function clearSearchHistory(Request $request)
     {
-        // Delete all search history records for the current user session
+        // Eliminar todos los registros del historial de búsqueda para la sesión de usuario actual
         SearchHistory::where('user_session_id', $request->session()->getId())->delete();
 
-        // Return a success message
-        return response()->json(['message' => 'Search history cleared successfully']);
+        // Devolver un mensaje de éxito
+        return response()->json(['message' => 'Historial de búsqueda borrado correctamente']);
     }
 
     /**
-     * Delete individual search history item.
+     * Eliminar un elemento individual del historial de búsqueda.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function deleteSearchHistoryItem($id)
     {
-        // Find and delete the search history item by its ID
+        // Encontrar y eliminar el elemento del historial de búsqueda por su ID
         SearchHistory::find($id)->delete();
 
-        // Return a success message
-        return response()->json(['message' => 'Search history item deleted successfully']);
+        // Devolver un mensaje de éxito
+        return response()->json(['message' => 'Elemento del historial de búsqueda eliminado correctamente']);
     }
 
     /**
-     * Call the Pokemon API to fetch data.
-     * For simplicity, you can implement this method or use a separate proxy class.
+     * Llamar a la API de Pokémon para obtener datos.
+     * Para simplicidad, puedes implementar este método o usar una clase proxy separada.
      *
      * @param  string  $searchTerm
      * @return mixed
@@ -95,14 +96,14 @@ class PokemonController extends Controller
     {
         $pokemonApiUrl = "https://pokeapi.co/api/v2/pokemon/{$searchTerm}";
 
-        // Make a request to the Pokémon API using Guzzle HTTP client
+        // Hacer una solicitud a la API de Pokémon usando el cliente HTTP Guzzle
         $response = Http::get($pokemonApiUrl);
 
-        // Check if the request was successful
+        // Verificar si la solicitud fue exitosa
         if ($response->successful()) {
             return $response->json();
         } else {
-            // Return null if the request fails
+            // Devolver nulo si la solicitud falla
             return null;
         }
     }
