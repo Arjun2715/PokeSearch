@@ -9,7 +9,7 @@ class SearchHistory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['search_term', 'user_session_id']; // Define fillable columns
+    protected $fillable = ['search_term', 'user_session_id'];// fillable columnas buscar y userSession
 
-    protected $primaryKey = 'id'; // Define the primary key column name
+    protected $primaryKey = 'id';  // primary key
 }
