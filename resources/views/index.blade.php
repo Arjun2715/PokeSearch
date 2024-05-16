@@ -102,8 +102,7 @@
                     });
                     pokemonInfo.innerHTML += '</ul>';
                     pokemonInfo.innerHTML += '<audio controls><source src="' + data.cries.latest +'" type="audio/ogg">Your browser does not support the audio element.</audio>';
-             
-                    pokemonInfo.innerHTML += '<h3>Sprites:</h3>';
+              
                     pokemonInfo.innerHTML += '<img src="' + data.sprites.front_default +'" alt="Front Default">';
                     pokemonInfo.innerHTML += '<img src="' + data.sprites.back_default +'" alt="Back Default">'; 
                     pokemonInfo.innerHTML += '<img src="' + data.sprites.other.dream_world.front_default +'" alt="Dream World">'; 

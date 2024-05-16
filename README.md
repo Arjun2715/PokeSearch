@@ -106,4 +106,4 @@ Los resultados y el historial deben mostrarse en una interfaz sencilla, sin nece
 - Tailwind CSS
 
 ## Capturas 
-![alt text](image-2.png)
+![alt text](image.png)
