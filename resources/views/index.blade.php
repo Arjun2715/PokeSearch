@@ -20,7 +20,7 @@
                 Limpiar Historial
             </button>
             <ul id="search-history-list" class="list-disc list-inside">
-                <!-- Search history items will be dynamically added here -->
+                <!-- Los elementos del historial de búsqueda se agregarán dinámicamente aquí -->
             </ul>
         </div>
     </div>
@@ -43,184 +43,174 @@
 
 </body>
 <script>
-    var lastSearchTerm = '';
+var lastSearchTerm = '';
 
-    window.onload = function() {
-        // Fetch search history when the page loads
-        fetchSearchHistory();
 
-        // Add event listener for clearing all search history
-        document.getElementById('clear-history-button').addEventListener('click', function() {
-            clearSearchHistory();
-        });
-    };
-
-    document.getElementById('search-button').addEventListener('click', function() {
-    var searchTerm = document.getElementById('pokemon-search').value.toLowerCase();
-
-    // Prevent duplicate searches
-    if (searchTerm === lastSearchTerm) {
-        console.log('Duplicate search term, skipping search.');
-        return; // Exit the function without executing the search
-    }
-
-    // Make an AJAX request to your backend
-    fetch('/search', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        },
-        body: JSON.stringify({
-            search_term: searchTerm
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Update the DOM with the fetched data
-        if (data.error) {
-            // Handle error
-            console.error('Error:', data.error);
-        } else {
-            // Display the fetched data
-            console.log(data);
-            // Example: Display the pokemon name, abilities, and images
-            var pokemonInfo = document.getElementById('pokemon-info');
-            pokemonInfo.innerHTML = '<h2>' + data.name + '</h2>';
-            pokemonInfo.innerHTML += '<img src="' + data.sprites.front_default + '" alt="' + data.name + '">';
-            // pokemonInfo.innerHTML += '<h3>Abilities:</h3>';
-            // pokemonInfo.innerHTML += '<ul>';
-            // data.abilities.forEach(function(ability) {
-            //     pokemonInfo.innerHTML += '<li>' + ability.ability.name + '</li>';
-            // });
-            // pokemonInfo.innerHTML += '</ul>';
-
-            // After getting the Pokémon data
-            var pokemonId = data.id;
-
-            // Construct the URL for the ability endpoint
-            var abilityUrl = 'https://pokeapi.co/api/v2/ability/' + pokemonId;
-
-            // Make a fetch request to the ability endpoint
-            fetch(abilityUrl)
-            .then(response => response.json())
-            .then(abilityData => {
-                // Filter the flavor text entries to include only Spanish
-                var spanishEntries = abilityData.flavor_text_entries.filter(entry => entry.language.name === 'es');
-                var uniqueSpanishEntries = removeDuplicates(spanishEntries, 'flavor_text');
-
-                // Extract the abilities in Spanish from the filtered entries
-                var spanishAbilities = uniqueSpanishEntries.map(entry => entry.flavor_text);
-
-                // Now append the Spanish abilities to the HTML
-                pokemonInfo.innerHTML += '<h3>Habilidades:</h3>';
-                pokemonInfo.innerHTML += '<ul>';
-                spanishAbilities.forEach(function(spanishAbility) {
-                    pokemonInfo.innerHTML += '<li>' + spanishAbility + '</li>';
-                });
-                pokemonInfo.innerHTML += '</ul>';
-
-                // Update the search history after a new search
-                fetchSearchHistory();
-                // Update the last search term
-                lastSearchTerm = searchTerm;
-            })
-            .catch(error => {
-                console.error('Error fetching abilities:', error);
-            });
-        }
-    })
-    .catch(error => {
-        // Handle network error
-        console.error('Error:', error);
+window.onload = function() {
+    // Obtener el historial de búsqueda cuando la página se carga
+    fetchSearchHistory();
+    // Agregar un event listener para limpiar todo el historial de búsqueda
+    document.getElementById('clear-history-button').addEventListener('click', function() {
+        clearSearchHistory();
     });
+};
+
+
+document.getElementById('search-button').addEventListener('click', function() {
+    var searchTerm = document.getElementById('pokemon-search').value.toLowerCase();
+    // Evitar búsquedas duplicadas
+    if (searchTerm === lastSearchTerm) {
+        console.log('Término de búsqueda duplicado, omitiendo búsqueda.');
+        return; // Salir de la función sin ejecutar la búsqueda
+    }
+    // Realizar una solicitud AJAX a tu backend
+    fetch('/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            body: JSON.stringify({
+                search_term: searchTerm
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Actualizar el DOM con los datos obtenidos
+            if (data.error) {
+                // Manejar errores
+                console.error('Error:', data.error);
+            } else {
+                // Mostrar los datos obtenidos
+                console.log(data);
+                // Ejemplo: Mostrar el nombre del Pokémon, habilidades e imágenes
+                var pokemonInfo = document.getElementById('pokemon-info');
+                pokemonInfo.innerHTML = '<h2>' + data.name + '</h2>';
+                pokemonInfo.innerHTML += '<img src="' + data.sprites.front_default + '" alt="' + data.name +
+                    '">';
+                // Después de obtener los datos del Pokémon
+                var pokemonId = data.id;
+                // Construir la URL para el endpoint de habilidades
+                var abilityUrl = 'https://pokeapi.co/api/v2/ability/' + pokemonId;
+                // Hacer una solicitud fetch al endpoint de habilidades
+                fetch(abilityUrl)
+                    .then(response => response.json())
+                    .then(abilityData => {
+                        // Filtrar las entradas de texto de sabor para incluir solo español
+                        var spanishEntries = abilityData.flavor_text_entries.filter(entry => entry
+                            .language.name === 'es');
+                        var uniqueSpanishEntries = removeDuplicates(spanishEntries, 'flavor_text'); 
+                        var spanishAbilities = uniqueSpanishEntries.map(entry => entry.flavor_text); 
+                        pokemonInfo.innerHTML += '<h3>Habilidades:</h3>';
+                        pokemonInfo.innerHTML += '<ul>';
+                        spanishAbilities.forEach(function(spanishAbility) {
+                            pokemonInfo.innerHTML += '<li>' + spanishAbility + '</li>';
+                        });
+                        pokemonInfo.innerHTML += '</ul>';
+                        // Actualizar el historial de búsqueda después de una nueva búsqueda
+                        fetchSearchHistory();
+                        // Actualizar el último término de búsqueda
+                        lastSearchTerm = searchTerm;
+                    })
+                    .catch(error => {
+                        console.error('Error al obtener habilidades:', error);
+                    });
+            }
+        })
+        .catch(error => {
+            // Manejar error de red
+            console.error('Error:', error);
+        });
 });
 
-// Function to remove duplicate entries based on a specific property
+
+// Función para eliminar entradas duplicadas basadas en una propiedad específica
 function removeDuplicates(array, key) {
     return array.filter((obj, index, self) =>
         index === self.findIndex(entry => entry[key] === obj[key])
     );
 }
 
-    // Function to fetch and display search history
-    function fetchSearchHistory() {
-        fetch('/search-history')
-            .then(response => response.json())
-            .then(data => {
-                // Clear existing search history
-                document.getElementById('search-history-list').innerHTML = '';
 
-                // Iterate over the search history data and generate HTML for each item
-                data.forEach(function(item) {
-                    var listItem = document.createElement('li');
-                    listItem.textContent = item.search_term;
-                    // Add click event listener to each history item
-                    listItem.addEventListener('click', function() {
-                        // Set the search input value to the clicked history item
-                        document.getElementById('pokemon-search').value = item.search_term;
-                        // Trigger a new search
-                        document.getElementById('search-button').click();
-                    });
-                    // Add a delete button for each history item
-                    var deleteButton = document.createElement('button');
-                    deleteButton.textContent = '<---Eliminar';
-                    deleteButton.addEventListener('click', function(event) {
-                        event
-                            .stopPropagation(); // Prevent the click from triggering the parent's click event
-                        deleteSearchHistoryItem(item.id);
-                    });
-                    listItem.appendChild(deleteButton);
-                    document.getElementById('search-history-list').appendChild(listItem);
+// Función para obtener y mostrar el historial de búsqueda
+function fetchSearchHistory() {
+    fetch('/search-history')
+        .then(response => response.json())
+        .then(data => {
+            // Limpiar el historial de búsqueda existente
+            document.getElementById('search-history-list').innerHTML = '';
+            // Iterar sobre los datos del historial de búsqueda y generar HTML para cada elemento
+            data.forEach(function(item) {
+                var listItem = document.createElement('li');
+                listItem.textContent = item.search_term;
+                // Agregar un event listener de click a cada elemento del historial
+                listItem.addEventListener('click', function() {
+                    // Establecer el valor de entrada de búsqueda al elemento de historial clicado
+                    document.getElementById('pokemon-search').value = item.search_term;
+                    // Activar una nueva búsqueda
+                    document.getElementById('search-button').click();
                 });
-                lastSearchTerm = '';
-            })
-            .catch(error => {
-                console.error('Error fetching search history:', error);
+                // Agregar un botón de eliminar para cada elemento del historial
+                var deleteButton = document.createElement('button');
+                deleteButton.textContent = '<---Eliminar';
+                deleteButton.addEventListener('click', function(event) {
+                    event
+                        .stopPropagation(); // Prevenir que el clic active el evento de clic del padre
+                    deleteSearchHistoryItem(item.id);
+                });
+                listItem.appendChild(deleteButton);
+                document.getElementById('search-history-list').appendChild(listItem);
             });
-    }
+            lastSearchTerm = '';
+        })
+        .catch(error => {
+            console.error('Error al obtener historial de búsqueda:', error);
+        });
+}
 
-    // Function to delete a search history item
-    function deleteSearchHistoryItem(itemId) {
-        fetch('/delete-search-history/' + itemId, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                },
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Reload the search history after deletion
-                    fetchSearchHistory();
-                } else {
-                    console.error('Failed to delete search history item.');
-                }
-            })
-            .catch(error => {
-                console.error('Error deleting search history item:', error);
-            });
-    }
 
-    // Function to clear all search history
-    function clearSearchHistory() {
-        fetch('/clear-search-history', {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                },
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Reload the search history after clearing
-                    fetchSearchHistory();
-                } else {
-                    console.error('Failed to clear search history.');
-                }
-            })
-            .catch(error => {
-                console.error('Error clearing search history:', error);
-            });
-    }
+// Función para eliminar un elemento del historial de búsqueda
+function deleteSearchHistoryItem(itemId) {
+    fetch('/delete-search-history/' + itemId, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                // Recargar el historial de búsqueda después de la eliminación
+                fetchSearchHistory();
+            } else {
+                console.error('Error al eliminar elemento del historial de búsqueda.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al eliminar elemento del historial de búsqueda:', error);
+        });
+}
+
+
+// Función para limpiar todo el historial de búsqueda
+function clearSearchHistory() {
+    fetch('/clear-search-history', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                // Recargar el historial de búsqueda después de limpiar
+                fetchSearchHistory();
+            } else {
+                console.error('Error al limpiar historial de búsqueda.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al limpiar historial de búsqueda:', error);
+        });
+}
 </script>
 
 </html>
