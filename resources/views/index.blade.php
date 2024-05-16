@@ -84,7 +84,7 @@
                     console.log(data);
                     var pokemonInfo = document.getElementById('pokemon-info');
 
-                    pokemonInfo.innerHTML = '<h2>' + data.name + '</h2>';
+                    pokemonInfo.innerHTML = '<h2> Nombre: ' + data.name + '</h2>';
                     pokemonInfo.innerHTML += '<p>Peso: ' + data.weight + '</p>';
 
                     pokemonInfo.innerHTML += '<ul>'; 
@@ -101,9 +101,6 @@
                             }) 
                     });
                     pokemonInfo.innerHTML += '</ul>';
-
-
-                    pokemonInfo.innerHTML += '<h3>Cries:</h3>';
                     pokemonInfo.innerHTML += '<audio controls><source src="' + data.cries.latest +'" type="audio/ogg">Your browser does not support the audio element.</audio>';
              
                     pokemonInfo.innerHTML += '<h3>Sprites:</h3>';
