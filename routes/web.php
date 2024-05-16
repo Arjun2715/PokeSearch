@@ -3,19 +3,19 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PokemonController;
 
-// Route to display the main page
+// Ruta para mostrar la página principal.
 Route::get('/', function () {
     return view('index');
 });
 
-// Route to handle search requests
+// Ruta para manejar solicitudes de búsqueda
 Route::post('/search', [PokemonController::class, 'search'])->name('search');
 
-// Route to fetch search history
+// Ruta para recuperar el historial de búsqueda
 Route::get('/search-history', [PokemonController::class, 'fetchSearchHistory'])->name('search.history');
 
-// Route to clear search history
+// Ruta para borrar el historial de búsqueda
 Route::post('/clear-search-history', [PokemonController::class, 'clearSearchHistory'])->name('search.history.clear');
 
-// Route to delete individual search history item
+// Ruta para eliminar un elemento individual del historial de búsqueda
 Route::delete('/delete-search-history/{id}', [PokemonController::class, 'deleteSearchHistoryItem'])->name('search.history.delete');
