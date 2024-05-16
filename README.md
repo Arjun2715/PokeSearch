@@ -107,4 +107,4 @@ Los resultados y el historial deben mostrarse en una interfaz sencilla, sin nece
 
 ## Capturas
  ![alt text](image-1.png)
-
+![alt text](image.png)
