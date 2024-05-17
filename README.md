@@ -1,6 +1,6 @@
 
-[![wakatime](https://wakatime.com/badge/user/018b84fc-1805-4419-a27d-a5484b979e0e/project/ea11e7b0-f324-4d43-bc7d-a4af3fa50784.svg)](https://wakatime.com/badge/user/018b84fc-1805-4419-a27d-a5484b979e0e/project/ea11e7b0-f324-4d43-bc7d-a4af3fa50784)
-
+<!--[![wakatime](https://wakatime.com/badge/user/018b84fc-1805-4419-a27d-a5484b979e0e/project/ea11e7b0-f324-4d43-bc7d-a4af3fa50784.svg)](https://wakatime.com/badge/user/018b84fc-1805-4419-a27d-a5484b979e0e/project/ea11e7b0-f324-4d43-bc7d-a4af3fa50784)
+-->
 # Aplicación Web de Búsqueda de Pokémon
 
 Esta aplicación web permite a los usuarios buscar Pokémon y ver su información en español. Utiliza la PokeAPI para obtener datos de Pokémon y proporciona una interfaz fácil de usar para buscar y mostrar resultados.
