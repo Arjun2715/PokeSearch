@@ -3,11 +3,7 @@
 -->
 # Aplicación Web de Búsqueda de Pokémon
 
-Esta aplicación web permite a los usuarios buscar Pokémon y ver su información en español. Utiliza la PokeAPI para obtener datos de Pokémon y proporciona una interfaz fácil de usar para buscar y mostrar resultados.
-
-##  Reto: Desarrollo de una WebApp de Búsqueda de Pokémon
-
-## Descripción
+Esta aplicación web permite a los usuarios buscar Pokémon y ver su información en español. Utiliza la PokeAPI para obtener datos de Pokémon y mostrar resultados.
 Desarrollar una webapp simple que permita a los usuarios buscar Pokémon y mostrar los nombres de sus habilidades en español. Además, se debe almacenar un historial de búsqueda en una base de datos y mostrar las últimas 10 búsquedas exitosas. Es importante diferenciar entre sesiones, de modo que cada navegador tenga su propio historial de búsqueda.
 
 ## Tecnologías Utilizadas
@@ -97,12 +93,6 @@ Los resultados y el historial deben mostrarse en una interfaz sencilla, sin nece
 
    - La aplicación muestra las últimas 10 consultas de búsqueda.
    - El historial de búsqueda se actualiza dinámicamente sin recargar la página.
-
-## Dependencias
-
-- Framework Laravel
-- Cliente HTTP Guzzle
-- Tailwind CSS
 
 ## Capturas 
 ![alt text](image.png)
